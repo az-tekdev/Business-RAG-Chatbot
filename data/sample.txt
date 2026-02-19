@@ -1,0 +1,28 @@
+# Business RAG Chatbot - Sample Document
+
+## Introduction
+
+This is a sample document for testing the Business RAG Chatbot system. The chatbot uses Retrieval-Augmented Generation (RAG) to answer questions about company documents.
+
+## Features
+
+- Document ingestion from PDF, TXT, and Markdown files
+- Vector-based semantic search
+- Conversational AI with context awareness
+- Source citation for answers
+
+## Usage
+
+To use the chatbot:
+
+1. Ingest your documents using the `ingest.py` script
+2. Start the Streamlit UI with `streamlit run app.py`
+3. Ask questions about your documents
+
+## Technical Details
+
+The system uses:
+- LangChain for orchestration
+- FAISS or Chroma for vector storage
+- OpenAI GPT models for generation
+- Sentence transformers for embeddings (optional)
