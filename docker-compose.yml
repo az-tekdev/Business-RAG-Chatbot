@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  rag-api:
+    build: .
+    container_name: business-rag-api
+    ports:
+      - "8000:8000"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - LLM_MODEL=${LLM_MODEL:-gpt-3.5-turbo}
+      - VECTOR_STORE_TYPE=${VECTOR_STORE_TYPE:-faiss}
+    volumes:
+      - ./data:/app/data
+      - ./vectorstore:/app/vectorstore
+      - ./.env:/app/.env
+    command: python api.py
+    restart: unless-stopped
+
+  rag-ui:
+    build: .
+    container_name: business-rag-ui
+    ports:
+      - "8501:8501"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - LLM_MODEL=${LLM_MODEL:-gpt-3.5-turbo}
+      - VECTOR_STORE_TYPE=${VECTOR_STORE_TYPE:-faiss}
+    volumes:
+      - ./data:/app/data
+      - ./vectorstore:/app/vectorstore
+      - ./.env:/app/.env
+    command: streamlit run app.py --server.port=8501 --server.address=0.0.0.0
+    restart: unless-stopped
+    depends_on:
+      - rag-api
